@@ -1,4 +1,9 @@
 #include <iostream>
+/*
+ * Template parameters can be either "typename / int / template class / pointer"
+ */
+
+
 
 //template specialization
 template<int ID>
@@ -28,4 +33,19 @@ public:
   }
 };
 
-//template over write
+//Note* the different between Item and COntainer is:
+//The final type of input class is determined within current class.
+
+//template parameters of template
+template<template<typename, typename> class _Item>
+class Container{
+private:
+  typedef _Item<Trait<0>, Trait<1>> T01;
+  typedef _Item<Trait<1>, Trait<0>> T10;
+public:
+  static void print_print_type() {
+    //_Item::print_type(); Error: template parameter should be instantiate within template class.
+    T01::print_type();
+    T10::print_type();
+  }
+};
