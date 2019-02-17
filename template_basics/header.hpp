@@ -1,9 +1,8 @@
 #include <iostream>
+#include <vector>
 /*
  * Template parameters can be either "typename / int / template class / pointer"
  */
-
-
 
 //template specialization
 template<int ID>
@@ -21,7 +20,39 @@ public:
   typedef float OP;
 };
 
-//template class
+
+// typefunction
+template<typename T>
+class ElementT;
+
+template<typename T>
+class ElementT<std::vector<T>>{
+public:
+  typedef T Type;
+};
+
+
+// func requires T to be declared explicitly when instantiation.
+template<typename T_>
+struct func{
+  func(T_ a){
+    std::cout << "call ctor" << typeid(T_).name() << std::endl;
+  }
+};
+
+template<typename T>
+void func2(T a){
+  std::cout << "func2" << std::endl;
+}
+
+////error: invalid use of incomplete type ‘class ElementT<std::vector<int> >’
+// template<typename T_, template<typename> class Tclass_>
+// class ElementT<Tclass_<T_>>{
+// public:
+//   typedef T_ Type;
+// };
+
+//static inherent
 template<typename T1, typename T2>
 class Item{
 public:
@@ -49,3 +80,4 @@ public:
     T10::print_type();
   }
 };
+
